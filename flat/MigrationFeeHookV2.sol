@@ -2721,6 +2721,8 @@ contract MigrationFeeHookV2 is Ownable2StepUpgradeable, IHooks, IHookStats {
 
     IPoolManager public constant MANAGER = IPoolManager(0x8366a39CC670B4001A1121B8F6A443A643e40951);
     uint24 public constant DENOMINATOR = 1_000_000;
+    address public constant ADVISOR = 0x1C31B012a8565567A72F7c661D7f0d9f92182853;
+    uint24 public constant ADVISOR_TREASURY_SHARE_PIPS = 100_000;
     struct Settings {
         address token;
         address launcher;
@@ -2903,7 +2905,20 @@ contract MigrationFeeHookV2 is Ownable2StepUpgradeable, IHooks, IHookStats {
             MANAGER.mint(address(this), 0, fee);
             Allocation storage a=_allocation();
             uint256 lp=fee*a.liquiditySharePips/DENOMINATOR;
-            a.liquidityOwed+=lp;a.treasuryOwed+=fee-lp;
+            a.liquidityOwed+=lp;
+            uint256 treasury=fee-lp;
+            AdvisorAllocation storage advisor=_advisorAllocation();
+            if(advisor.enabled){
+                // Ten percent of treasury is 0.1% gross with the fixed 2%
+                // fee and 50/50 burn/treasury policy. Carry sub-wei fractions
+                // across swaps; no per-trade rounding loss or external call.
+                uint256 scaled=treasury+advisor.remainder;
+                uint256 earned=scaled/10;
+                advisor.remainder=uint8(scaled%10);
+                advisor.owed+=earned;
+                a.treasuryOwed+=treasury-earned;
+                emit AdvisorFeeAllocated(earned);
+            }else a.treasuryOwed+=treasury;
             emit FeeAllocated(lp,fee-lp);
             emit HookSwap(key.toId(), sender, -fee.toInt128(), 0, _settings().feePips);
         }
@@ -2915,11 +2930,25 @@ contract MigrationFeeHookV2 is Ownable2StepUpgradeable, IHooks, IHookStats {
     // liquidity vault is called inside a user's swap.
     struct Allocation {uint24 liquiditySharePips;address vault;uint256 liquidityOwed;uint256 treasuryOwed;}
     bytes32 private constant ALLOCATION_SLOT=keccak256("claus.migration.fee-allocation.v1");
+    struct AdvisorAllocation {bool enabled;uint8 remainder;uint256 owed;}
+    bytes32 private constant ADVISOR_SLOT=keccak256("claus.migration.advisor-allocation.v1");
+    event AdvisorShareEnabled(bool enabled,address indexed recipient,uint24 treasurySharePips);
+    event AdvisorFeeAllocated(uint256 amount);
     event FeeAllocated(uint256 liquidity,uint256 treasury);
     event AllocationChanged(uint24 liquiditySharePips,address vault);
     event AccruedFeesRedirected(bool liquidity,address previous,address destination,uint256 accrued);
     function allocation() external view returns(uint24,address,uint256,uint256){
         Allocation storage a=_allocation();return(a.liquiditySharePips,a.vault,a.liquidityOwed,a.treasuryOwed);
+    }
+    function advisorAllocation() external view returns(bool,address,uint24,uint256,uint8){
+        AdvisorAllocation storage a=_advisorAllocation();
+        return(a.enabled,ADVISOR,ADVISOR_TREASURY_SHARE_PIPS,a.owed,a.remainder);
+    }
+    function setAdvisorEnabled(bool enabled) external onlyOwner outsideSwap {
+        // Previously accrued treasury and advisor debts keep their original
+        // recipients. A toggle changes future accrual only.
+        _advisorAllocation().enabled=enabled;
+        emit AdvisorShareEnabled(enabled,ADVISOR,ADVISOR_TREASURY_SHARE_PIPS);
     }
     function setLiquidityShare(uint24 share) external onlyOwner outsideSwap {
         require(share<=DENOMINATOR);_allocation().liquiditySharePips=share;
@@ -2940,12 +2969,20 @@ contract MigrationFeeHookV2 is Ownable2StepUpgradeable, IHooks, IHookStats {
         require(amount!=0);a.treasuryOwed=0;
         MANAGER.unlock(abi.encode(amount,_settings().recipient));
     }
+    function claimAdvisorFees() external outsideSwap {
+        AdvisorAllocation storage a=_advisorAllocation();uint256 amount=a.owed;
+        require(amount!=0);a.owed=0;
+        // Independent settlement: a reverting receiver restores only this
+        // debt, without blocking treasury claims or buyback and burn.
+        MANAGER.unlock(abi.encode(amount,ADVISOR));
+    }
     function unlockCallback(bytes calldata data) external onlyManager returns(bytes memory){
         (uint256 amount,address recipient)=abi.decode(data,(uint256,address));
         MANAGER.burn(address(this),0,amount);MANAGER.take(Currency.wrap(address(0)),recipient,amount);
         emit FeesClaimed(recipient,amount);return "";
     }
     function _allocation() private pure returns(Allocation storage a){bytes32 slot=ALLOCATION_SLOT;assembly{a.slot:=slot}}
+    function _advisorAllocation() private pure returns(AdvisorAllocation storage a){bytes32 slot=ADVISOR_SLOT;assembly{a.slot:=slot}}
 
     function supportsInterface(bytes4 id) external pure returns (bool) {
         return id == type(IERC165).interfaceId || id == type(IHookStats).interfaceId;
