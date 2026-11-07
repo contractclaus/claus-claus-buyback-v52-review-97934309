@@ -8,11 +8,11 @@
   "sourceFiles": [
     {
       "path": "flat/ClausBuybackVaultV2.sol",
-      "hash": "sha256:fdb92ef56419d0baca6d64f1fed0d1b18ad9b40b945908fabb503c6ce9be7f78"
+      "hash": "sha256:f4a07bc63c2cd2b4f4cd6d4250a10962e00e8de13526e0ac529eb1197dc181aa"
     },
     {
       "path": "flat/MigrationFeeHookV2.sol",
-      "hash": "sha256:1917a5b5c7321b9d9bbc54b518d551f36afd34ab434c4fc1179e01957ca9d962"
+      "hash": "sha256:aea35f90eea5555749c2de820f2f58c3163d0d08d7dfaf96020ad1d10c1d9081"
     }
   ]
 }
