@@ -1,6 +1,6 @@
 # CLAUS v52 buyback hardening review
 
-This is the exact hardened candidate revision 2 for the existing CLAUS pool on Robinhood (chain 4663). Required review entry files are flat/MigrationFeeHookV2.sol and flat/ClausBuybackVaultV2.sol. The prior v51 review withheld its approval marker because of keeper-controlled price limits and treasury-payout coupling. The first v52 review found stale oracle history after rollback and later re-upgrade. Revision 2 fixes that path with the existing administrator-only reset and full renewed warmup. This candidate requires a fresh independent decision bound to its new source and build hashes. It is not yet activated.
+This is the exact hardened candidate revision 3 for the existing CLAUS pool on Robinhood (chain 4663). Required review entry files are flat/MigrationFeeHookV2.sol and flat/ClausBuybackVaultV2.sol. The prior v51 review withheld its approval marker because of keeper-controlled price limits and treasury-payout coupling. The first v52 review found stale oracle history after rollback and later re-upgrade. Revision 2 fixes that path with the existing administrator-only reset and full renewed warmup. Revision 3 also resolves the flow finding about directly donated CLAUS: the owner can burn those tokens separately without spending ETH or changing protocol buyback counters. This candidate requires a fresh independent decision bound to its new source and build hashes. It is not yet activated.
 
 ## Price and treasury behavior
 
@@ -9,6 +9,8 @@ The hook stores a 601-entry history, updating at every distinct swap timestamp. 
 The AMM history is not an external fair-value oracle. Sustained manipulation, oracle availability, price trends and batch price impact must be assessed, and limitations must be reported. A legitimate price move can delay a burn until the independent price floor permits it. There is no off-chain signer or override.
 
 The vault no longer calls claimTreasuryFees. Treasury payouts are independent and retain their owed accounting if a recipient rejects ETH. The worker can continue buybacks after a conclusively reverted treasury transaction, preserving that original row and spent gas; an unknown transaction still blocks.
+
+The owner-only burnDonatedTokens method burns only the vault-held CLAUS. totalDonatedTokensBurned and DonatedTokensBurned keep these burns separate from totalTokensBurned and BuybackBurned. The normal buyback still checks only its new swap output, so a donation cannot satisfy or inflate its price minimum. The keeper cannot call the donation burn, and the method is blocked during an unlocked pool operation. No ETH claim, withdrawal or arbitrary token transfer is added.
 
 ## Reproduce exact builds
 
@@ -24,10 +26,6 @@ Ordinary trades retain the 2% fee split equally between burn and treasury. The a
 
 ## Verification and notice
 
-36 contract tests and 91 worker tests pass; these include 2,048 fuzz cases, 64 independent 160-digit decimal vectors, same-timestamp spam, ring wrap, real-router output/partial-fill behavior, rejecting treasury recipients, and an actual chain fork at block 108723051. The fork deploys these exact artifacts, tests founder registration and operator revocation, switches and seeds the hook, burns after warmup, pays treasury separately, returns to the old implementation and burns again. The test returns once more to the new implementation, reuses the existing new vault, requires a fresh 600-second warmup, and burns again. Only ArbSys clock responses are mocked. All runtime evidence is a test of the candidate, not a claim of deployment.
+42 contract tests and 94 worker tests pass; these include 2,048 fuzz cases, 64 independent 160-digit decimal vectors, same-timestamp spam, ring wrap, real-router output/partial-fill behavior, rejecting treasury recipients, and an actual chain fork at block 108747367. The fork deploys these exact artifacts, tests founder registration and operator revocation, switches and seeds the hook, burns after warmup, pays treasury separately, returns to the old implementation and burns again. The test returns once more to the new implementation, reuses the existing new vault, requires a fresh 600-second warmup, and burns again. It also transfers a real CLAUS donation and burns it through the existing administrator, preserving the buyback counter and ETH balance. Only ArbSys clock responses are mocked. All runtime evidence is a test of the candidate, not a claim of deployment.
 
 New notice: https://x.com/i/status/2119183454378107080 . Activation is not permitted before 2026-11-07T22:45:00Z or before independent approval. Prior reports, payments and v51 evidence remain historical and are not reused as approval.
-
-The `dependencies/` directory contains the complete Sourcify compiler inputs for the actual non-proxy UniversalRouter and PoolManager. Its manifest records live runtime hashes and the exact constructor-immutable offsets used in the local comparison; all other runtime bytes matched the recomputed source. The real-router fixture used by the tests matched the full live router runtime hash. This distinguishes verified dependency source from a generic upstream interface assumption.
-
-A standalone oracle regression suite is included in `verification/`. Run `forge test` from this repository root with Foundry and solc 0.8.26. It needs no installed Solidity library, network fork, key or funding. It checks fresh reactivation warmup, discarding a wrapped ring/cumulative value, same-timestamp weighting and the exact constant-price tolerance. The broader authenticated-owner, manager, router and rollback integration tests described above ran in the implementation workspace; these four public tests do not claim that broader coverage.
