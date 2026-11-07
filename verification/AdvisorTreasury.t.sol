@@ -25,6 +25,7 @@ contract AdvisorTreasuryTest {
     receive() external payable {}
     function setUp() public {
         vm.etch(manager,type(AdvisorManagerMock).runtimeCode);vm.deal(manager,100 ether);
+        vm.etch(address(0x1234),hex"00"); // Token identity only; these tests exercise native-fee accounting.
         hook=MigrationFeeHookV2(address(new AdvisorProxy(address(new MigrationFeeHookV2()),abi.encodeCall(MigrationFeeHookV2.initialize,(address(this),address(0x1234),address(this),uint160(1<<96),int24(60))))));
         key=PoolKey(Currency.wrap(address(0)),Currency.wrap(address(0x1234)),0x800000,60,IHooks(address(hook)));
         vm.prank(manager);hook.beforeInitialize(address(this),key,uint160(1<<96));
