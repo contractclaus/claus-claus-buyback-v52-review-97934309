@@ -1,0 +1,233 @@
+{
+  "at": "2026-11-07T22:00:22.506Z",
+  "results": [
+    {
+      "name": "router",
+      "chainId": 4663,
+      "address": "0x204FAca1764B154221e35c0d20aBb3c525710498",
+      "blockNumber": "108735655",
+      "runtimeHash": "0x76b92a5bba2dd32019a64eb421f1750e78c6ba044dbfa6840b722eb5ac63d296",
+      "runtimeBytes": 24380,
+      "compiler": "0.8.26+commit.8a97fa7a.Emscripten.clang",
+      "sourceUrl": "https://sourcify.dev/server/v2/contract/4663/0x204FAca1764B154221e35c0d20aBb3c525710498?fields=abi,sources,compilation,proxyResolution",
+      "nonImmutableRuntimeMatched": true,
+      "immutableReferences": {
+        "1783": [
+          {
+            "length": 32,
+            "start": 1160
+          },
+          {
+            "length": 32,
+            "start": 9644
+          },
+          {
+            "length": 32,
+            "start": 9975
+          }
+        ],
+        "1922": [
+          {
+            "length": 32,
+            "start": 1227
+          },
+          {
+            "length": 32,
+            "start": 4972
+          },
+          {
+            "length": 32,
+            "start": 10632
+          }
+        ],
+        "1926": [
+          {
+            "length": 32,
+            "start": 2053
+          },
+          {
+            "length": 32,
+            "start": 5258
+          }
+        ],
+        "2379": [
+          {
+            "length": 32,
+            "start": 6749
+          },
+          {
+            "length": 32,
+            "start": 12200
+          },
+          {
+            "length": 32,
+            "start": 12536
+          }
+        ],
+        "2383": [
+          {
+            "length": 32,
+            "start": 3930
+          },
+          {
+            "length": 32,
+            "start": 11898
+          },
+          {
+            "length": 32,
+            "start": 14413
+          }
+        ],
+        "2776": [
+          {
+            "length": 32,
+            "start": 12909
+          },
+          {
+            "length": 32,
+            "start": 13369
+          },
+          {
+            "length": 32,
+            "start": 17016
+          }
+        ],
+        "2779": [
+          {
+            "length": 32,
+            "start": 12943
+          },
+          {
+            "length": 32,
+            "start": 13336
+          },
+          {
+            "length": 32,
+            "start": 16983
+          }
+        ],
+        "2782": [
+          {
+            "length": 32,
+            "start": 8241
+          }
+        ],
+        "2785": [
+          {
+            "length": 32,
+            "start": 8305
+          }
+        ],
+        "7823": [
+          {
+            "length": 32,
+            "start": 18182
+          }
+        ],
+        "7825": [
+          {
+            "length": 32,
+            "start": 18371
+          }
+        ],
+        "7827": [
+          {
+            "length": 32,
+            "start": 18135
+          }
+        ],
+        "7829": [
+          {
+            "length": 32,
+            "start": 18261
+          }
+        ],
+        "7831": [
+          {
+            "length": 32,
+            "start": 18299
+          }
+        ],
+        "7834": [
+          {
+            "length": 32,
+            "start": 1375
+          }
+        ],
+        "7837": [
+          {
+            "length": 32,
+            "start": 1419
+          }
+        ],
+        "13284": [
+          {
+            "length": 32,
+            "start": 1654
+          },
+          {
+            "length": 32,
+            "start": 2189
+          },
+          {
+            "length": 32,
+            "start": 5163
+          },
+          {
+            "length": 32,
+            "start": 6847
+          },
+          {
+            "length": 32,
+            "start": 11440
+          },
+          {
+            "length": 32,
+            "start": 20357
+          },
+          {
+            "length": 32,
+            "start": 20476
+          },
+          {
+            "length": 32,
+            "start": 20726
+          },
+          {
+            "length": 32,
+            "start": 21062
+          },
+          {
+            "length": 32,
+            "start": 23462
+          },
+          {
+            "length": 32,
+            "start": 23823
+          }
+        ]
+      },
+      "proxy": false
+    },
+    {
+      "name": "manager",
+      "chainId": 4663,
+      "address": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+      "blockNumber": "108735655",
+      "runtimeHash": "0xbd3881180b547f5fe817545743cfb4343e96b1bc6640dcd70c106b0066e95626",
+      "runtimeBytes": 24009,
+      "compiler": "0.8.26+commit.8a97fa7a.Emscripten.clang",
+      "sourceUrl": "https://sourcify.dev/server/v2/contract/4663/0x8366a39CC670B4001A1121B8F6A443A643e40951?fields=abi,sources,compilation,proxyResolution",
+      "nonImmutableRuntimeMatched": true,
+      "immutableReferences": {
+        "571": [
+          {
+            "length": 32,
+            "start": 13606
+          }
+        ]
+      },
+      "proxy": false
+    }
+  ]
+}
