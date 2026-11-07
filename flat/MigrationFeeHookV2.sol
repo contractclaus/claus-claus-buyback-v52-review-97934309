@@ -2990,3 +2990,4 @@ contract MigrationFeeHookV2 is Ownable2StepUpgradeable, IHooks, IHookStats {
         assembly { s.slot := slot }
     }
 }
+
