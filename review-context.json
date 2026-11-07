@@ -1,19 +1,22 @@
 {
   "administrator": "0x979d5810d32292358639f25294472f01c95bdc46",
+  "advisor": "0x1c31b012a8565567a72f7c661d7f0d9f92182853",
+  "advisorPayoutSeparate": true,
+  "advisorTreasurySharePips": 100000,
   "buybackSharePips": 500000,
   "chainId": 4663,
   "components": [
     {
-      "artifactHash": "sha256:5b04ec5f3d1434d0abf8959d38d6356b41cd1fef3d85ff86da3978ed2e0c178a",
-      "buildId": "sha256:9259d7fc1108aadb107fe499849d60238e03e4506fdb838aece015bb71515630",
+      "artifactHash": "sha256:4cdcd25d650daed5ea1f0dba3c362876f9dc7624cf5281536f881e84cebc781d",
+      "buildId": "sha256:be018c17f0356c0b2b3e248a7e6ab4c2c62325778b61e9e52072550908f373f3",
       "contract": "MigrationFeeHookV2",
       "entry": "flat/MigrationFeeHookV2.sol",
       "role": "hook",
-      "runtimeHash": "0x0337ff3a53d0625d09733dfd7a7eff706c874fab960af4929fe932920603e1be"
+      "runtimeHash": "0x1af00947e569748721a9b23c4a6cdf442e5a62c998eef54e663611abf6951686"
     },
     {
-      "artifactHash": "sha256:b00efca2691eb71704c32e630b4075e736e789109737ec29e0d90b0f1528e5a3",
-      "buildId": "sha256:bac916ba0feec0275ef52caba05d6edaf3e035071cc04ced2523e76c79c1b7fd",
+      "artifactHash": "sha256:33854727c445057f8c201ce4cd64192afe883433c3a4920a77f617abca771031",
+      "buildId": "sha256:ea4f4b3d1ec9ece90dac6f211bbadc686adcfec501940d02c35690a39b209f09",
       "contract": "ClausBuybackVaultV2",
       "entry": "flat/ClausBuybackVaultV2.sol",
       "role": "vault",
@@ -28,7 +31,7 @@
   "oneBuybackPerBlock": true,
   "oracleSlippageBps": 50,
   "oracleWindowSeconds": 600,
-  "sourceHash": "sha256:9ccf4fc47a48db5672c28391c45b06af740dc0c5c274507abf14ec96efd484c3",
+  "sourceHash": "sha256:855602e0f8e692d11d6d825812a3248f907affd183ad532e398236822784ac25",
   "token": "0x163015276f3244bc2ccb78b4d69cc8a4069effac",
   "treasury": "0xbb145ca83272c3806d4ddc75ca1d5514789cf1c5",
   "treasuryPayoutSeparate": true,
@@ -44,5 +47,5 @@
     "0xac796f7ac40c0ce9cdc0dbe61d8bc7c98dc5cbc5",
     "500000000000000000"
   ],
-  "version": 2
+  "version": 3
 }
