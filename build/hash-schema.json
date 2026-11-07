@@ -1,0 +1,18 @@
+{
+  "algorithm": "sha256",
+  "prefix": "sha256:",
+  "encoding": "UTF-8 canonical JSON, recursively sorted object keys, original array order, no whitespace",
+  "fileHash": "digest({path,content})",
+  "sourceHash": "digest([{path,hash},...], ordered by path.localeCompare(other,\"en\"))",
+  "artifactHash": "digest(entire parsed artifact object)",
+  "sourceFiles": [
+    {
+      "path": "flat/ClausBuybackVaultV2.sol",
+      "hash": "sha256:fdb92ef56419d0baca6d64f1fed0d1b18ad9b40b945908fabb503c6ce9be7f78"
+    },
+    {
+      "path": "flat/MigrationFeeHookV2.sol",
+      "hash": "sha256:a98b24c069b394e846600992aff9100a1c2640cb2b3642fb8af2f21c432711c8"
+    }
+  ]
+}
