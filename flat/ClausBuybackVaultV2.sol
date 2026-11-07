@@ -2153,6 +2153,7 @@ contract ClausBuybackVaultV2 is Ownable2Step {
     uint256 public totalEthSpent;
     uint256 public totalTokensBurned;
     uint256 public lastBuybackBlock;
+    uint256 public totalDonatedTokensBurned;
 
     struct Plan {
         uint128 amountIn;
@@ -2167,6 +2168,7 @@ contract ClausBuybackVaultV2 is Ownable2Step {
     event BuybackBurned(uint256 ethSpent, uint256 tokensBurned, uint256 supplyAfter);
     event AutomationConfigured(address keeper, uint128 maxBatch, bool enabled);
     event UnspentFeesRecovered(address indexed recipient, uint256 amount);
+    event DonatedTokensBurned(uint256 tokensBurned, uint256 supplyAfter);
 
     constructor(address administrator, PoolKey memory pool, address initialKeeper, uint128 initialMaxBatch)
         Ownable(administrator)
@@ -2255,5 +2257,22 @@ contract ClausBuybackVaultV2 is Ownable2Step {
         emit UnspentFeesRecovered(recipient, amount);
     }
 
+    /// @notice Burn CLAUS received directly, without claiming or spending fees.
+    /// Donation burns have their own counter and cannot inflate buyback output.
+    function burnDonatedTokens() external onlyOwner outsideSwap returns (uint256 burned) {
+        IClausBurnable token = IClausBurnable(Currency.unwrap(key.currency1));
+        burned = token.balanceOf(address(this));
+        if (burned == 0) return 0;
+        busy = true;
+        uint256 supplyBefore = token.totalSupply();
+        token.burn(burned);
+        require(token.balanceOf(address(this)) == 0
+            && token.totalSupply() + burned == supplyBefore, "Burn mismatch");
+        totalDonatedTokensBurned += burned;
+        busy = false;
+        emit DonatedTokensBurned(burned, token.totalSupply());
+    }
+
     receive() external payable {}
 }
+
