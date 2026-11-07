@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-07T19:36:03.099Z",
+  "address": "0x979d5810d32292358639f25294472f01c95bdc46",
+  "liveRuntimeHash": "0x2c736730547cb945fe3b87d0d9eb094e2d638c20b2cc07d6cca131f56c4056e4",
+  "compiledRuntimeHash": "0xef2d971d94a63e2896c0d16f96ed67c44048b132e5d7c134c01f585c42f581b6",
+  "metadataStrippedEqual": true,
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "evm.deployedBytecode.object"
+        ]
+      }
+    }
+  }
+}
