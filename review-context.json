@@ -1,0 +1,48 @@
+{
+  "administrator": "0x979d5810d32292358639f25294472f01c95bdc46",
+  "buybackSharePips": 500000,
+  "chainId": 4663,
+  "components": [
+    {
+      "artifactHash": "sha256:a04ffe2c7be9bb05ccbe1d41a9425cad3f34f8ad435e0e561e50fbb2116ffd27",
+      "buildId": "sha256:078d6002ee0fd08e588e781312dbd0aa4586bbf9265e29addfc05989b8064df3",
+      "contract": "MigrationFeeHookV2",
+      "entry": "flat/MigrationFeeHookV2.sol",
+      "role": "hook",
+      "runtimeHash": "0xf168150e8a1361c71131d3d0929e62e8abba99ee2e27237febf349282bfa87d7"
+    },
+    {
+      "artifactHash": "sha256:d0ceba3a8b1a449d806fed2769324c4eaf0fc44a742586046780a6fae08b1ba4",
+      "buildId": "sha256:53ad49efbbfae3b7cc1047a0a23439f6f9ea1a0907198be2c6d90a3d080bb264",
+      "contract": "ClausBuybackVaultV2",
+      "entry": "flat/ClausBuybackVaultV2.sol",
+      "role": "vault",
+      "runtimeHash": "0x0109bbdc02509d943c521937681f9aeefd825b8b5d835e0599ac7d24f521198e"
+    }
+  ],
+  "feePips": 20000,
+  "hookAdmin": "0xf2eaa097f1092437b6157b53d02b9182147c4ac0",
+  "hookProxy": "0x15bbcdb33e6e77f390292d56ded02249c396bfff",
+  "oldHookImplementation": "0x23efc76dbb3f340732929d28f4244b3d1c703eb7",
+  "oldVault": "0x6be6888c5f8b4a8315eb379ef96d5eeb8e970dcd",
+  "oneBuybackPerBlock": true,
+  "oracleSlippageBps": 50,
+  "oracleWindowSeconds": 600,
+  "sourceHash": "sha256:f5de248c6bbe3324b1942a2937a1b4e1bd364e89fe4f7a10b450f3770f027085",
+  "token": "0x163015276f3244bc2ccb78b4d69cc8a4069effac",
+  "treasury": "0xbb145ca83272c3806d4ddc75ca1d5514789cf1c5",
+  "treasuryPayoutSeparate": true,
+  "vaultConstructorArgs": [
+    "0x979d5810d32292358639f25294472f01c95bdc46",
+    {
+      "currency0": "0x0000000000000000000000000000000000000000",
+      "currency1": "0x163015276f3244bc2ccb78b4d69cc8a4069effac",
+      "fee": 8388608,
+      "hooks": "0x15bbcdb33e6e77f390292d56ded02249c396bfff",
+      "tickSpacing": 60
+    },
+    "0xac796f7ac40c0ce9cdc0dbe61d8bc7c98dc5cbc5",
+    "500000000000000000"
+  ],
+  "version": 2
+}
