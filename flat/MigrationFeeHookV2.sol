@@ -1670,14 +1670,23 @@ library BuybackOracle {
         Observation[601] observations;
     }
 
+    /// @notice Invalidate previous observations and start a fresh reference window.
+    /// Only the hook's owner-only reactivation path exposes this operation.
+    function reset(State storage self, int24 tick, uint64 time) internal {
+        if (tick < TickMath.MIN_TICK || tick > TickMath.MAX_TICK) revert InvalidObservation();
+        self.startedAt = time;
+        self.timestamp = time;
+        self.tick = tick;
+        self.index = 0;
+        self.count = 1;
+        self.cumulative = 0;
+        self.observations[0] = Observation(time, 0);
+    }
+
     function record(State storage self, int24 tick, uint64 time) internal {
         if (tick < TickMath.MIN_TICK || tick > TickMath.MAX_TICK) revert InvalidObservation();
         if (self.count == 0) {
-            self.startedAt = time;
-            self.timestamp = time;
-            self.tick = tick;
-            self.count = 1;
-            self.observations[0] = Observation(time, 0);
+            reset(self, tick, time);
             return;
         }
         if (time < self.timestamp) revert InvalidObservation();
@@ -2750,10 +2759,16 @@ contract MigrationFeeHookV2 is Ownable2StepUpgradeable, IHooks, IHookStats {
         e = v == 1 && p.zeroForOne;
     }
 
-    /// @notice Seed an existing pool after upgrading; history cannot be reset.
+    event BuybackOracleRestarted(uint64 readyAt);
+    /// @notice Start a fresh window after every activation, including a rollback return.
+    /// Old observations are discarded; no buyback is permitted for 600 seconds.
     function initializeBuybackOracle() external onlyOwner outsideSwap {
-        require(_settings().launched && _oracle().count == 0, "Oracle already seeded");
-        _recordBuybackPrice();
+        require(_settings().launched, "Pool not launched");
+        (uint160 price, int24 tick,,) = MANAGER.getSlot0(PoolId.wrap(_settings().poolId));
+        if (price == 0) revert InvalidPool();
+        uint64 time = _oracleTime();
+        BuybackOracle.reset(_oracle(), tick, time);
+        emit BuybackOracleRestarted(time + 600);
     }
 
     function minimumBuybackOutput(uint128 amountIn) external view returns (uint256) {
