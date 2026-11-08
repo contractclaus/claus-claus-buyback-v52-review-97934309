@@ -228,6 +228,23 @@
         ]
       },
       "proxy": false
+    },
+    {
+      "name": "token",
+      "chainId": 4663,
+      "address": "0x163015276f3244bC2CcB78b4D69cc8A4069EfFAC",
+      "implementation": "0xd68727ddd50e8BA07E4Be20D37A5EcF3Dd814BFF",
+      "proxyAdmin": "0xCbc4bBD337e62c926C995E66A231e5E2b0A722a8",
+      "runtimeHash": "0x71819163cc9021372ae8d213f8190fbb2417d2c17e772af5ae2997c18db4e6bc",
+      "runtimeBytes": 20432,
+      "compiler": "0.8.26+commit.8a97fa7a",
+      "standardInput": "dependencies/token.standard-input.json",
+      "runtime": "dependencies/token-runtime.hex",
+      "evidence": "dependencies/token-live-evidence.json",
+      "standardInputSha256": "8662084b17a8bce6616e61375201de65a98fff14f274ebb57a500c61d8935207",
+      "exactRuntimeMatched": true,
+      "immutableReferences": {},
+      "proxy": true
     }
   ]
 }
