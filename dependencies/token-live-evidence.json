@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-08T00:02:33.693Z",
+  "chainId": 4663,
+  "block": {
+    "number": "108804686",
+    "hash": "0xfaa5233913041149e66d7cb19ef255198c40a151271a1ae30d24ca3df0a31748",
+    "timestamp": "1794096152",
+    "tag": "latest",
+    "canonicalHeaderRechecked": true,
+    "finalityClaimed": false
+  },
+  "token": "0x163015276f3244bC2CcB78b4D69cc8A4069EfFAC",
+  "implementation": "0xd68727ddd50e8BA07E4Be20D37A5EcF3Dd814BFF",
+  "proxyAdmin": "0xCbc4bBD337e62c926C995E66A231e5E2b0A722a8",
+  "proxyRuntimeHash": "0x9d6c4a864a77d72df88937efda3fd77943803688e3f88e14dada5bfab48c04d6",
+  "implementationRuntimeHash": "0x71819163cc9021372ae8d213f8190fbb2417d2c17e772af5ae2997c18db4e6bc",
+  "compiledRuntimeHash": "0x71819163cc9021372ae8d213f8190fbb2417d2c17e772af5ae2997c18db4e6bc",
+  "exactMatch": true,
+  "compilerVersion": "solc, the solidity compiler commandline interface\nVersion: 0.8.26+commit.8a97fa7a.Darwin.appleclang",
+  "standardInputSha256": "8662084b17a8bce6616e61375201de65a98fff14f274ebb57a500c61d8935207",
+  "sourceFile": "src/MigrationToken.sol",
+  "sourceSha256": "c99cdfefa3718ae1818a05b01e1c13be377bda27f8ea777e672e229ff54be3fb",
+  "sourceCount": 33,
+  "settings": {
+    "remappings": [
+      "@openzeppelin/contracts-upgradeable/=dependencies/upgrade-lab-20261105/vendor-extensibility/contracts-upgradeable/package/",
+      "@openzeppelin/contracts/=dependencies/upgrade-lab-20261105/vendor-extensibility/contracts/package/",
+      "@openzeppelin/contracts/proxy/utils/Initializable.sol=dependencies/test-replica-20261105/port/lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+      "@uniswap/v4-core/=dependencies/test-replica-20261105/port/lib/v4-periphery/lib/v4-core/",
+      "forge-std/=dependencies/abc22-20261105/lib/forge-std/src/"
+    ],
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "metadata": {
+      "bytecodeHash": "none"
+    },
+    "evmVersion": "cancun",
+    "libraries": {},
+    "viaIR": true,
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode.object",
+          "evm.deployedBytecode.object",
+          "evm.deployedBytecode.immutableReferences",
+          "storageLayout",
+          "metadata"
+        ]
+      }
+    }
+  },
+  "ownership": {
+    "tokenOwner": "0x979D5810D32292358639f25294472f01c95bDc46",
+    "proxyAdminOwner": "0x979D5810D32292358639f25294472f01c95bDc46",
+    "administrator": "0x979D5810D32292358639f25294472f01c95bDc46",
+    "administratorOwner": "0xBb145cA83272c3806D4dDc75cA1D5514789cF1C5",
+    "operator": "0x8aCA8890D34086D7a30B9c06fAe25E0C3cda4cFa",
+    "managedToken": true,
+    "managedTokenProxyAdmin": true
+  },
+  "totalSupply": "990462714205892391432530510"
+}
